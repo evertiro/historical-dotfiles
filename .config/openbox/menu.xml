@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+	<menu id="root-menu" label="Openbox 3">
+		<separator label="Applications"/>
+		<menu id="apps-development-menu" label="Development">
+			<item label="NetBeans">
+				<action name="Execute">
+					<execute>
+						netbeans
+					</execute>
+				</action>
+			</item>
+			<item label="Scite">
+				<action name="Execute">
+					<execute>
+						scite
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="apps-games-menu" label="Games">
+			<menu id="apps-games-menu-action" label="Action">
+				<item label="AssaultCube">
+					<action name="Execute">
+						<execute>
+							game assaultcube
+						</execute>
+					</action>
+				</item>
+				<item label="Cube">
+					<action name="Execute">
+						<execute>
+							game cube
+						</execute>
+					</action>
+				</item>
+				<item label="Nexuiz">
+					<action name="Execute">
+						<execute>
+							game nexuiz-sdl
+						</execute>
+					</action>
+				</item>
+				<item label="Open Arena">
+					<action name="Execute">
+						<execute>
+							game openarena
+						</execute>
+					</action>
+				</item>
+				<item label="Sauerbraten">
+					<action name="Execute">
+						<execute>
+							game sauerbraten-client
+						</execute>
+					</action>
+				</item>
+			</menu>
+			<menu id="apps-games-menu-arcade" label="Arcade">
+				<item label="Arkanoid SB">
+					<action name="Execute">
+						<execute>
+							game arkanoidsb.sh
+						</execute>
+					</action>
+				</item>
+				<item label="Armagetron">
+					<action name="Execute">
+						<execute>
+							game armagetronad
+						</execute>
+					</action>
+				</item>
+				<item label="Astromenace">
+					<action name="Execute">
+						<execute>
+							game astromenace
+						</execute>
+					</action>
+				</item>
+				<item label="Cave 9">
+					<action name="Execute">
+						<execute>
+							game cave9
+						</execute>
+					</action>
+				</item>
+				<item label="Grid Wars">
+					<action name="Execute">
+						<execute>
+							game gridwars
+						</execute>
+					</action>
+				</item>
+				<item label="Mirror Magic">
+					<action name="Execute">
+						<execute>
+							mirrormagic
+						</execute>
+					</action>
+				</item>
+				<item label="Neverball">
+					<action name="Execute">
+						<execute>
+							game neverball
+						</execute>
+					</action>
+				</item>
+				<item label="Neverputt">
+					<action name="Execute">
+						<execute>
+							game neverputt
+						</execute>
+					</action>
+				</item>
+				<item label="Typhoon 2001">
+					<action name="Execute">
+						<execute>
+							game typhoon_2001
+						</execute>
+					</action>
+				</item>
+				<item label="Tyrian">
+					<action name="Execute">
+						<execute>
+							game tyrian
+						</execute>
+					</action>
+				</item>
+				<item label="Word War VI">
+					<action name="Execute">
+						<execute>
+							game wordwarvi
+						</execute>
+					</action>
+				</item>
+				<item label="XMoto">
+					<action name="Execute">
+						<execute>
+							game xmoto
+						</execute>
+					</action>
+				</item>
+			</menu>
+			<menu id="apps-games-menu-casino" label="Casino">
+				<item label="PokerTH">
+					<action name="Execute">
+						<execute>
+							pokerth
+						</execute>
+					</action>
+				</item>
+				<item label="Pysol">
+					<action name="Execute">
+						<execute>
+							pysol
+						</execute>
+					</action>
+				</item>
+			</menu>
+			<menu id="apps-games-menu-platform" label="Platform">
+				<item label="Block Dude">
+					<action name="Execute">
+						<execute>
+							game blockdude
+						</execute>
+					</action>
+				</item>
+				<item label="Knytt Stories">
+					<action name="Execute">
+						<execute>
+							knyttstories
+						</execute>
+					</action>
+				</item>
+				<item label="Pingus">
+					<action name="Execute">
+						<execute>
+							game pingus
+						</execute>
+					</action>
+				</item>
+				<item label="SuperTux">
+					<action name="Execute">
+						<execute>
+							game supertux
+						</execute>
+					</action>
+				</item>
+				<item label="Which Way Is Up">
+					<action name="Execute">
+						<execute>
+							whichwayisup
+						</execute>
+					</action>
+				</item>
+			</menu>
+			<menu id="apps-games-menu-retro" label="Retro">
+				<item label="Froggix">
+					<action name="Execute">
+						<execute>
+							froggix
+						</execute>
+					</action>
+				</item>
+				<item label="Maze Of Galious">
+					<action name="Execute">
+						<execute>
+							game mog
+						</execute>
+					</action>
+				</item>
+				<item label="Open Invaders">
+					<action name="Execute">
+						<execute>
+							game open-invaders
+						</execute>
+					</action>
+				</item>
+				<item label="Toppler">
+					<action name="Execute">
+						<execute>
+							game toppler
+						</execute>
+					</action>
+				</item>
+			</menu>
+			<menu id="apps-games-menu-strategy" label="Strategy">
+				<item label="Beastie Worker">
+					<action name="Execute">
+						<execute>
+							beastieworker
+						</execute>
+					</action>
+				</item>
+				<item label="Boswars">
+					<action name="Execute">
+						<execute>
+							game boswars
+						</execute>
+					</action>
+				</item>
+				<item label="Lincity">
+					<action name="Execute">
+						<execute>
+							game lincity-ng
+						</execute>
+					</action>
+				</item>
+				<item label="Warzone2100">
+					<action name="Execute">
+						<execute>
+							game warzone2100
+						</execute>
+					</action>
+				</item>
+			</menu>
+			<menu id="apps-games-menu-rpg" label="RPG">
+				<item label="Dink Smallwood">
+					<action name="Execute">
+						<execute>
+							game freedink
+						</execute>
+					</action>
+				</item>
+				<item label="Lost Labyrinth">
+					<action name="Execute">
+						<execute>
+							game lostlabyrinth
+						</execute>
+					</action>
+				</item>
+				<item label="The Mana World">
+					<action name="Execute">
+						<execute>
+							game tmw
+						</execute>
+					</action>
+				</item>
+				<item label="Stendhal">
+					<action name="Execute">
+						<execute>
+							stendhal
+						</execute>
+					</action>
+				</item>
+			</menu>
+		</menu>
+		<menu id="apps-graphics-menu" label="Graphics">
+			<item label="Dia">
+				<action name="Execute">
+					<execute>
+						dia
+					</execute>
+				</action>
+			</item>
+			<item label="GColor2">
+				<action name="Execute">
+					<execute>
+						gcolor2
+					</execute>
+				</action>
+			</item>
+			<item label="Gimp">
+				<action name="Execute">
+					<execute>
+						gimp
+					</execute>
+				</action>
+			</item>
+			<item label="Inkscape">
+				<action name="Execute">
+					<execute>
+						inkscape
+					</execute>
+				</action>
+			</item>
+			<item label="Sk1">
+				<action name="Execute">
+					<execute>
+						sk1
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="apps-multimedia-menu" label="Multimedia">
+			<item label="Mirage">
+				<action name="Execute">
+					<execute>
+						mirage
+					</execute>
+				</action>
+			</item>
+			<item label="Exaile">
+				<action name="Execute">
+					<execute>
+						exaile
+					</execute>
+				</action>
+			</item>
+			<item label="VLC">
+				<action name="Execute">
+					<execute>
+						vlc
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="apps-net-menu" label="Network">
+			<item label="Deluge">
+				<action name="Execute">
+					<execute>
+						deluge
+					</execute>
+				</action>
+			</item>
+			<item label="Filezilla">
+				<action name="Execute">
+					<execute>
+						filezilla
+					</execute>
+				</action>
+			</item>
+			<item label="Firefox">
+				<action name="Execute">
+					<execute>
+						firefox
+					</execute>
+				</action>
+			</item>
+			<item label="Thunderbird">
+				<action name="Execute">
+					<execute>
+						thunderbird
+					</execute>
+				</action>
+			</item>
+			<item label="XChat">
+				<action name="Execute">
+					<execute>
+						xchat
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="apps-office-menu" label="Office">
+			<item label="Acrobat">
+				<action name="Execute">
+					<execute>
+						acroread
+					</execute>
+				</action>
+			</item>
+			<item label="OpenOffice">
+				<action name="Execute">
+					<execute>
+						soffice-dev
+					</execute>
+				</action>
+			</item>
+			<item label="Scribus">
+				<action name="Execute">
+					<execute>
+						scribus
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<menu id="apps-system-menu" label="System">
+			<item label="File Roller">
+				<action name="Execute">
+					<execute>
+						file-roller
+					</execute>
+				</action>
+			</item>
+			<item label="PCManFM">
+				<action name="Execute">
+					<execute>
+						pcmanfm
+					</execute>
+				</action>
+			</item>
+			<item label="URXVT">
+				<action name="Execute">
+					<execute>
+						urxvt
+					</execute>
+				</action>
+			</item>
+		</menu>
+		<separator/>
+		<menu id="settings-menu" label="Settings">
+			<item label="Appearance">
+				<action name="Execute">
+					<execute>
+						lxappearance
+					</execute>
+				</action>
+			</item>
+			<item label="Key Editor">
+				<action name="Execute">
+					<execute>
+						obkey
+					</execute>
+				</action>
+			</item>
+			<item label="Menu Editor">
+				<action name="Execute">
+					<execute>
+						obmenu
+					</execute>
+				</action>
+			</item>
+			<item label="Openbox Config">
+				<action name="Execute">
+					<execute>
+						obconf
+					</execute>
+				</action>
+			</item>
+			<item label="Screensaver Config">
+				<action name="Execute">
+					<execute>
+						xscreensaver-demo
+					</execute>
+				</action>
+			</item>
+			<item label="Theme Editor">
+				<action name="Execute">
+					<execute>
+						obtheme
+					</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="Reconfigure">
+				<action name="Reconfigure"/>
+			</item>
+		</menu>
+		<item label="Exit">
+			<action name="Execute">
+				<execute>
+					oblogout
+				</execute>
+			</action>
+		</item>
+	</menu>
+</openbox_menu>

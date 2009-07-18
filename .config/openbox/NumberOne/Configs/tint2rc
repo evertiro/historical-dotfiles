@@ -1,0 +1,54 @@
+#---------------------------------------------
+# TINT2 CONFIG FILE
+#---------------------------------------------
+
+#---------------------------------------------
+# BACKGROUND AND BORDER
+#---------------------------------------------
+rounded = 0
+border_width = 0
+background_color = #000000 25
+
+rounded = 0
+border_width = 0
+background_color = #00cfff 100
+
+#---------------------------------------------
+# PANEL
+#---------------------------------------------
+panel_monitor = all
+panel_position = bottom right 
+panel_size = 885 16
+panel_margin = 0 0
+panel_padding = 0 0
+font_shadow = 0
+panel_background_id = 0
+
+#---------------------------------------------
+# TASKBAR
+#---------------------------------------------
+taskbar_mode = single_monitor
+taskbar_padding = 2 0 0
+taskbar_background_id = 0
+
+#---------------------------------------------
+# TASKS
+#---------------------------------------------
+task_icon = 0
+task_text = 1
+task_width = 0 #140
+task_centered = 1
+task_padding = 6 0
+task_font = Clean 8
+task_font_color = #ffffff 100
+task_active_font_color = #000000 100
+task_background_id = 1
+task_active_background_id = 2
+
+#---------------------------------------------
+# MOUSE ACTION ON TASK
+#---------------------------------------------
+mouse_middle = none
+mouse_right = shade
+mouse_scroll_up = toggle
+mouse_scroll_down = iconify
