@@ -67,15 +67,11 @@ alias grep='grep -n --color=auto'
 alias chkpkg='namcap PKGBUILD'
 alias abssearch='ls -R /var/abs/ | grep'
 alias build='cd ~/Build'
-alias home='cd ~'
 alias tuxsay='cowsay -f tux `fortune -a`'
-alias linode='ssh linode15241@newark74.linode.com'
-alias server='ssh root@ghost1227.com'
 
 #------------------------------
 # FUNCTIONS
 #------------------------------
-function emptytrash() {	CDIR=$PWD && cd ~/.local/share/Trash/files && rm -Rf * && cd ../info &&rm -Rf * && cd $CDIR; }
 function calc() { echo "$*" | bc; }
 function calc2() { bc <<<"$@"; }
 function extract() {
