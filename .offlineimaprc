@@ -1,0 +1,51 @@
+[general]
+ui = TTY.TTYUI
+accounts = ArchLinux,GMail,Bumpr
+
+[Account ArchLinux]
+localrepository = ArchLinux-Local
+remoterepository = ArchLinux-Remote
+maxsyncaccounts = 3
+maxconnections = 3
+
+[Account GMail]
+localrepository = GMail-Local
+remoterepository = GMail-Remote
+maxsyncaccounts = 3
+maxconnections = 3
+
+[Account Bumpr]
+localrepository = Bumpr-Local
+remoterepository = Bumpr-Remote
+maxsyncaccounts = 3
+maxconnections = 3
+
+[Repository ArchLinux-Local]
+type = Maildir
+localfolders = ~/.mail/ArchLinux
+
+[Repository GMail-Local]
+type = Maildir
+localfolders = ~/.mail/GMail
+
+[Repository Bumpr-Local]
+type = Maildir
+localfolders = ~/.mail/Bumpr
+
+[Repository ArchLinux-Remote]
+type = Gmail
+remoteuser = @archlinux.us
+remotepass = xxxxxxxx
+realdelete = no
+
+[Repository GMail-Remote]
+type = Gmail
+remoteuser = @gmail.com
+remotepass = xxxxxxxx
+realdelete = no
+
+[Repository Bumpr-Remote]
+type = Gmail
+remoteuser = @bumpr.net
+remotepass = xxxxxxxx
+realdelete = no

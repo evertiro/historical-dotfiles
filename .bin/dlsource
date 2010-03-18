@@ -1,0 +1,87 @@
+#!/bin/bash
+#
+# dlsource v0.1 - A simple PKGBUILD source downloader.
+# Copyright (C) 2009 Daniel J Griffiths <ghost1227@archlinux.us>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+
+ASK="\e[0;33m==>\e[0;37m"
+INFO="\e[0;34m==>\e[0;37m"
+ERROR="\e[0;31m==>\e[0;37m"
+SUCCESS="\e[0;32m==>\e[0;37m"
+RESET="\e[0m"
+
+# Check for existence of PKGBUILD
+if [ ! -f PKGBUILD ]; then
+    echo -e "${ERROR} PKGBUILD not found!${RESET}"
+    exit 1
+fi
+
+# Source PKGBUILD
+. PKGBUILD
+
+# Check number of items in source array
+if [ ${#source[@]} -gt 1 ]; then
+    ANS=-1
+    echo -e "${INFO} Multiple sources found!${RESET}"
+    count=0
+    while [[ ${count} -lt ${#source[@]} ]]; do
+        echo -e "    $((count+1)). ${source[${count}]}"
+        let count=count+1
+    done
+    while [[ $ANS -le 0 ]] || [[ $ANS -gt ${#source[@]} ]]; do
+        echo -ne "${ASK} Download which source file? "
+        read ANS
+    done
+    source=${source[$ANS-1]}
+    lsource=$(echo $source | rev | awk -F'/' '{ print $1 }' | rev)
+    if [ -f $source ] || [ -f $lsource ]; then
+        echo -e "${ERROR} File already exists in build directory!${RESET}"
+        exit 0
+    else
+        echo -e "${INFO} Downloading $lsource ${RESET}"
+        wget -nv $source
+        if [ ! -f $lsource ]; then
+            echo -e "${ERROR} Download failed!${RESET}"
+            exit 1
+        else
+            echo -e "${SUCCESS} Download Complete${RESET}"
+            MD5=$(md5sum $lsource | awk '{ print $1 }')
+            echo -e "${SUCCESS} MD5SUM: \e[0;32m${MD5}${RESET}"
+            exit 0
+        fi
+    fi
+else
+    lsource=$(echo $source | rev | awk -F'/' '{ print $1 }' | rev)
+    if [ -f $source ] || [ -f $lsource ]; then
+        echo -e "${ERROR} File already exists in build directory!${RESET}"
+        exit 0
+    else
+        echo -e "${INFO} Downloading $lsource ${RESET}"
+        wget -nv $source 
+        if [ ! -f $lsource ]; then
+            echo -e "${ERROR} Download failed!${RESET}" 
+            exit 1
+        else
+            echo -e "${SUCCESS} Download Complete${RESET}"
+            MD5=$(md5sum $lsource | awk '{ print $1 }')
+            echo -e "${SUCCESS} MD5SUM: \e[0;32m${MD5}${RESET}"
+	    SHA1=$(sha1sum $lsource | awk '{ print $1 }')
+	    echo -e "${SUCCESS} SHA1SUM: \e[0;32m${SHA1}${RESET}"
+            exit 0
+        fi
+    fi
+fi

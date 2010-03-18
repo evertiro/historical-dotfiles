@@ -1,0 +1,10 @@
+application/octet-stream        ; echo %s "can be anything..."                          ; copiousoutput
+text/html                       ; /usr/bin/lynx -dump %s ; nametemplate=%s.html         ; copiousoutput
+application/pdf                 ; /usr/bin/apvlv %s                                     ; copiousoutput
+#image/*                         ; /usr/bin/mirage %s                                    ; copiousoutput
+image/*				; /usr/bin/ompload -u %s				; copiousoutput
+audio/*                         ; /usr/bin/vlc %s                                       ; copiousoutput
+video/*                         ; /usr/bin/vlc %s                                       ; copiousoutput
+
+text/plain			; cat; copiousoutput; edit=$EDITOR %s
+

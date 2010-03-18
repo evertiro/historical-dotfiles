@@ -1,0 +1,16 @@
+###
+# gmail specific options
+###
+
+#color status cyan default
+
+  set from      = "@gmail.com"
+  set sendmail  = "/usr/bin/msmtp -a gmail"
+  set mbox      = "+GMail/Archive"
+  set record    = "+GMail/Sent"
+  set postponed = "+GMail/Drafts"
+
+macro index E "<change-folder>+GMail/Archive<enter><limit>~B " "search everything"
+macro index A "<save-message>+GMail/Archive<enter>"            "archive message"
+macro index D "<save-message>+GMail/Trash<enter>" 	           "move message to the trash"
+macro index S "<save-message>+GMail/Spam<enter>" 	           "mark message as spam"

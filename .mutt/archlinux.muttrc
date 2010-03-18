@@ -1,0 +1,16 @@
+###
+# archlinux specific options
+###
+
+#color status green default
+
+  set from      = "@archlinux.us"
+  set sendmail  = "/usr/bin/msmtp -a archlinux"
+  set mbox      = "+ArchLinux/Archive"
+  set record    = "+ArchLinux/Sent"
+  set postponed = "+ArchLinux/Drafts"
+
+macro index E "<change-folder>+ArchLinux/Archive<enter><limit>~B " "search everything"
+macro index A "<save-message>+ArchLinux/Archive<enter>"            "archive message"
+macro index D "<save-message>+ArchLinux/Trash<enter>" 	           "move message to the trash"
+macro index S "<save-message>+ArchLinux/Spam<enter>" 	           "mark message as spam"

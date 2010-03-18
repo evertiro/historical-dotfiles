@@ -1,0 +1,16 @@
+###
+# bumpr specific options
+###
+
+#color status cyan default
+
+  set from      = "@bumpr.net"
+  set sendmail  = "/usr/bin/msmtp -a bumpr"
+  set mbox      = "+Bumpr/Archive"
+  set record    = "+Bumpr/Sent"
+  set postponed = "+Bumpr/Drafts"
+
+macro index E "<change-folder>+Bumpr/Archive<enter><limit>~B " "search everything"
+macro index A "<save-message>+Bumpr/Archive<enter>"            "archive message"
+macro index D "<save-message>+Bumpr/Trash<enter>" 	       "move message to the trash"
+macro index S "<save-message>+Bumpr/Spam<enter>" 	       "mark message as spam"

@@ -1,0 +1,122 @@
+###
+# Main mutt config file - mostly stolen from brisbin
+###
+
+# directories and commands {{{
+
+  set alias_file          = ~/.mutt/alias                    # where to store aliases
+  set certificate_file    = ~/.mutt/certificates             # where to store certs
+  set header_cache        = ~/.mutt/cache/headers            # where to store headers
+  set message_cachedir    = ~/.mutt/cache/bodies             # where to store bodies
+  set mailcap_path        = ~/.mutt/mailcap                  # entries for filetypes
+  set signature           = ~/.mutt/sig                      # signature file
+  set tmpdir              = ~/.mutt/temp                     # where to keep temp files
+  set editor              = "vim +:silent+?^$"               # use vim and skip to first blank line
+  set ispell              = "aspell -e -c"                   # use aspell as ispell
+  set query_command       = "mutt_vc_query '%s'"             # query rolo's vCards
+
+# directories and commands }}}
+
+# maildir settings {{{
+
+  set mbox_type           = Maildir                          # mailbox type
+  set folder              = ~/.mail                          # mailbox location
+  set spoolfile           = "+ArchLinux/INBOX"               # ArchLinux is default inbox
+
+# maildir settings }}}
+
+# main options {{{
+
+unset confirmappend                                          # don't prompt
+  set delete                                                 # don't prompt
+# set mail_check          = 0                                # minimum time between scans
+unset markers                                                # hide + on wrapped lines
+unset mark_old                                               # don't show as old/unread
+  set menu_scroll                                            # scroll menues instead of redraw
+  set pager_index_lines   = 10                               # number of index lines to show
+  set pager_context       = 5                                # number of context lines to show
+  set pager_stop                                             # don't scroll to next message
+  set pipe_decode                                            # strip headers and eval mimetypes
+  set reverse_alias                                          # show names from alias file
+  set sort                = threads                          # sort like gmail
+  set sort_aux            = reverse-last-date-received       # sort like gmail
+unset sort_re                                                # always thread
+  set thorough_search                                        # strip and eval before search
+  set tilde                                                  # pad blank lines like vim
+  set timeout             = 3                                # idle time before scanning
+
+# main options }}}
+
+# enriched messages {{{
+
+  auto_view text/html                                        # view html automatically
+  alternative_order text/plain text/enriched text/html       # but save it for last
+
+# enriched messages }}}
+
+# formats and regexps {{{
+
+  set alias_format        = "%4n %t %-20a %r"
+  set date_format         = "%m/%d/%y at %I:%M%P"
+  set index_format        = "%3C %Z %[!%m/%d] %-17.17F %s"
+  set quote_regexp        = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+  set reply_regexp        = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+  set status_format       = "-%r- %v ─┴────/ %f %m%?n? [+%n]?%?d? [-%d]?%?t? [*%t]? /%?p?───/ %p waiting to send /?─%>─(%P)───"
+
+# formats and regexps }}}  
+
+# composing mail {{{
+
+  set askcc                                                  # ask for CC:
+unset askbcc						     # don't ask for BCC:
+  set attribution         = "On %d, %n wrote:"               # set attribution
+  set edit_headers                                           # show headers when composing
+  set fast_reply                                             # skip to compose when replying
+  set forward_format      = "Fwd: %s"                        # format for subject when forwarding
+  set forward_quote                                          # include message in forwards
+  set include                                                # include message in replies
+  set realname            = "Daniel J Griffiths (Ghost1227)" # who am i?
+  set reply_to                                               # reply to 'Reply to:' field
+  set reverse_name                                           # reply as whoever it was to
+
+# composing mail }}}
+
+# headers to show {{{
+
+  ignore *                                                   # ignore all headers
+  unignore from: to: cc: date: subject:                      # show only these
+  hdr_order from: to: cc: date: subject:                     # show in this order
+
+# headers to show }}}
+
+# lists and boxes {{{
+
+  mailboxes +ArchLinux/INBOX +ArchLinux/arch-dev +ArchLinux/arch-dev-public +ArchLinux/arch-general +ArchLinux/aur-dev +ArchLinux/aur-general +ArchLinux/courtney +ArchLinux/magazine +ArchLinux/olug +ArchLinux/personal +ArchLinux/projects +ArchLinux/registrations +ArchLinux/-------------
+  mailboxes +GMail/INBOX +GMail/personal +GMail/registrations +GMail/-------------
+  mailboxes +Bumpr/INBOX
+
+# lists and boxes }}}
+
+# source configs {{{
+
+  source ~/.mutt/colors.muttrc                               # set colors
+  source ~/.mutt/sidebar.muttrc                              # sidebar config
+  source $alias_file                                         # required
+  source ~/.mutt/archlinux.muttrc                            # source archlinux as default
+
+# source configs }}}
+
+# override with account specific folder hooks {{{
+
+  folder-hook ArchLinux/* source ~/.mutt/archlinux.muttrc
+  folder-hook GMail/* source ~/.mutt/gmail.muttrc
+  folder-hook Bumpr/* source ~/.mutt/bumpr.muttrc
+
+# override with account specific folder hooks }}}
+
+# macros {{{
+
+  macro index \Cr "<tag-pattern>all<enter><tag-prefix><clear-flag>N<untag-pattern>all<enter>" "mark all as read"
+  macro index I "<change-folder>!<enter>" "go to inbox"
+
+# macros }}}
