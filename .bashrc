@@ -100,7 +100,7 @@ which xrandr &>/dev/null && alias fixres='xrandr --size 1280x1024'
 
 ### DEBIAN SPECIFIC {{{
 
-if [[ which apt-get &>/dev/null ]]; then
+if which apt-get &>/dev/null; then
 	alias apt-get='sudo apt-get'
 fi
 
@@ -108,7 +108,7 @@ fi
 
 ### ARCH SPECIFIC {{{
 
-if [[ which pacman $>/dev/null ]]; then
+if which pacman &>/dev/null; then
 	alias pacman='sudo pacman'
 	which clyde &>/dev/null && alias clyde='sudo clyde'
 
