@@ -10,6 +10,9 @@ set nowrap          " Disable line wrapping
 set shortmess=aTI
 set smartcase       " Case sensitive search if caps used
 "set smartindent     " Tries to indent programs properly
+set expandtab       " Use spaces as tabs
+set softtabstop=4       " Set tab to 4 spaces
+set shiftwidth=4    " Set indentation to 4 spaces
 
 " Preview in chromium
 command PreviewWeb :!$BROWSER %<CR>
