@@ -33,13 +33,13 @@ fi
 
 # SET PATH
 [[ -d $HOME/.bin ]] && export PATH=$HOME/.bin:$PATH
-[[ -d /usr/share/perl5/vendor_perl/auto/share/dist/Cope ]] && export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH
+
+# MAKE LESS MORE FRIENDLY
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
 # MISC OPTIONS
 eval `dircolors -b`
 [[ -z "$SSH_TTY" ]] && export BROWSER=chromium || export BROWSER=lynx
-export CVSROOT=":ext:dgriffiths@aur.archlinux.org:/srv/cvs/community"
-export CVS_RSH=ssh
 export EDITOR=vim
 export HISTCONTROL=ignoredups
 export HISTSIZE=5000
@@ -57,15 +57,18 @@ stty -ctlecho
 # SETUP SSH-AGENT/KEYCHAIN
 if [[ -f $HOME/.ssh/id_rsa ]]; then
         eval `ssh-agent`
-        keychain -Q -q $HOME/.ssh/id_rsa
-        [[ -f $HOME/.keychain/$HOSTNAME-sh ]] && source $HOME/.keychain/$HOSTNAME-sh
+	which keychain &>/dev/null
+	if [[ $? == '0' ]]; then
+	        keychain -Q -q $HOME/.ssh/id_rsa
+        	[[ -f $HOME/.keychain/$HOSTNAME-sh ]] && source $HOME/.keychain/$HOSTNAME-sh
+	fi
 fi
 
 # SETUP GIT USERNAME/EMAIL
 which git &>/dev/null
 if [[ $? == '0' ]]; then
 	git config --global user.name "Ghost1227"
-	git config --global user.email "ghost1227@archlinux.us"
+	git config --global user.email "dgriffiths@ghost1227.com"
 fi
 
 # PROMPT
@@ -99,6 +102,47 @@ alias ssh='ssh -A'
 which colortail &>/dev/null && alias tail='colortail -q -k /etc/colortail/conf.messages'
 which xrandr &>/dev/null && alias fixres='xrandr --size 1280x1024'
 
+rsed() {
+	if [[ -z ${1} ]] || [[ -z ${2} ]]; then
+		echo "rsed <find> <replace>"
+		return
+	fi
+
+	if [[ -z ${3} ]]; then
+		loc='*'
+	else
+		loc="${3}"
+	fi
+
+	for i in $(grep -R "${1}" ${loc} | cut -d ':' -f 1); do
+		sed -i "s|${1}|${2}|g" ${i};
+	done
+}
+
+vercmp() {
+	if [[ -z ${1} ]] || [[ -z ${2} ]]; then
+		echo "vercmp <oldpath> <newpath>"
+		return
+	fi
+
+	for i in $(ls ${2}); do
+		if [[ "$(diff ${1}/${i} ${2}/${i})" != "" ]]; then
+			if [[ ! -d ${1}/${i} ]]; then
+				vimdiff ${1}/${i} ${2}/${i};
+			fi
+		fi
+	done
+}
+
+lc() {
+	unset y;
+	for x in $(find . -type f); do
+		w=$(wc -l $x | cut -d ' ' -f 1);
+		y=$y+$w;
+	done;
+	echo 0$y | bc;
+}
+	
 ### ALIASES }}}
 
 ### DEBIAN SPECIFIC {{{
@@ -108,103 +152,3 @@ if which apt-get &>/dev/null; then
 fi
 
 ### DEBIAN SPECIFIC }}}
-
-### ARCH SPECIFIC {{{
-
-if which pacman &>/dev/null; then
-	alias pacman='sudo pacman'
-	which clyde &>/dev/null && alias clyde='sudo clyde'
-
-	function aurget() {
-        	if [[ -z $1 ]]; then
-                	echo -e "aurget requires an argument!"
-	                return 1
-        	fi
-
-	        if [[ -f $1.tar.gz ]] || [[ -d $1 ]]; then
-        	        echo -e "$1 already exists in build directory!"
-                	return 1
-	        fi
-
-        	wget -q aur.archlinux.org/packages/$1/$1.tar.gz
-
-	        if [[ ! -f $1.tar.gz ]]; then
-        	        echo -e "$1 does not exist in AUR!"
-                	return 1
-	        fi
-
-        	tar -xvf $1.tar.gz
-	        rm $1.tar.gz
-        	cd $1
-	}
-
-	function cpkg() {
-		NAME=`echo $1 | sed -e 's|/||'`
-	        tar -cf $NAME.tar $NAME
-        	gzip $NAME.tar
-	        rm -R $NAME
-	}
-
-fi
-
-###  ARCH SPECIFIC }}}
-
-### PKGBUILD.com SPECIFIC {{{
-
-if [[ "$HOSTNAME" == "pkgbuild" ]]; then
-	alias chrootupdate='sudo chrootupdate'
-	alias makechrootpkg='sudo makechrootpkg'
-
-	function pkgcleanup() {
-	        if [[ ! -f PKGBUILD ]]; then
-                	echo "PKGBUILD not found!"
-        	        return 1
-	        fi
-
-        	sed -i 's|\$srcdir|\${srcdir}|g' PKGBUILD
-	        sed -i 's|\$startdir/src|\${srcdir}|g' PKGBUILD
-        	sed -i 's|\${startdir}/src|\${srcdir}|g' PKGBUILD
-	        sed -i 's|\$pkgdir|\${pkgdir}|g' PKGBUILD
-	        sed -i 's|\$startdir/pkg|\${pkgdir}|g' PKGBUILD
-        	sed -i 's|\${startdir}/pkg|\${pkgdir}|g' PKGBUILD
-	        sed -i 's|\$pkgname|\${pkgname}|g' PKGBUILD
-        	sed -i 's|\$pkgver|\${pkgver}|g' PKGBUILD
-	}
-
-	function archco() {
-        	PACKAGE=$1
-	        if [[ -z $PACKAGE ]]; then
-        	        echo "archco requires an argument!"
-	                return 1
-        	fi
-	        if [[ ! -d $HOME/extra/svn-packages ]]; then
-        	        mkdir $HOME/extra >/dev/null
-	                cd $HOME/extra
-                	svn checkout -N svn+ssh://gerolde.archlinux.org/srv/svn-packages
-        	fi
-	        cd $HOME/extra/svn-packages
-        	/usr/bin/archco $PACKAGE
-	        cd $PACKAGE/trunk
-        	pkgcleanup
-	}
-
-	function communityco() {
-        	PACKAGE=$1
-	        if [[ -z $PACKAGE ]]; then
-                	echo "communityco requires an argument!"
-        	        return 1
-	        fi
-        	if [[ ! -d $HOME/community/svn-packages ]]; then
-	                mkdir $HOME/community >/dev/null
-        	        cd $HOME/community
-	                svn checkout -N svn+ssh://aur.archlinux.org/srv/svn-packages
-        	fi
-	        cd $HOME/community/svn-packages
-        	/usr/bin/communityco $PACKAGE
-	        cd $PACKAGE/trunk
-        	pkgcleanup
-	}
-
-fi
-
-### PKGBUILD.com SPECIFIC }}}
