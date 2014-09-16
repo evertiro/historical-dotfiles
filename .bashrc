@@ -33,26 +33,28 @@ fi
 
 # SET PATH
 [[ -d $HOME/.bin ]] && export PATH=$HOME/.bin:$PATH
+export PATH=/opt/lampp/bin:$PATH
 
 # MAKE LESS MORE FRIENDLY
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+[ -x /usr/local/bin/lesspipe.sh ] && eval "$(lesspipe)"
 
 # MISC OPTIONS
 eval `dircolors -b`
-[[ -z "$SSH_TTY" ]] && export BROWSER=chromium || export BROWSER=lynx
+[[ -z "$SSH_TTY" ]] && export BROWSER=firefox || export BROWSER=lynx
 export EDITOR=vim
 export HISTCONTROL=ignoredups
 export HISTSIZE=5000
 export HISTFILESIZE=1000
 export HISTIGNORE='ls:pwd:exit:clear'
 export OOO_FORCE_DESKTOP=gnome
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/
 shopt -s cdable_vars
 shopt -s cdspell
 shopt -s checkwinsize
 shopt -s cmdhist
 shopt -s extglob
 set -o noclobber
-stty -ctlecho
+[[ -t 0 ]] && stty -ctlecho
 
 # SETUP SSH-AGENT/KEYCHAIN
 if [[ -f $HOME/.ssh/id_rsa ]]; then
@@ -68,14 +70,21 @@ fi
 which git &>/dev/null
 if [[ $? == '0' ]]; then
 	git config --global user.name "Ghost1227"
-	git config --global user.email "dgriffiths@ghost1227.com"
+	git config --global user.email "dgriffiths@section214.com"
+fi
+
+# SETUP BZR USERNAME/EMAIL
+which bzr &>/dev/null
+if [[ $? == '0' ]]; then
+    bzr whoami "Daniel J Griffiths <dgriffiths@section214.com>"
+    bzr launchpad-login dgriffiths
 fi
 
 # PROMPT
 if [[ `id -un` != root ]]; then
-        PS1="[${GR}\u@\h${BL} \W${NONE}]$ "
+    PS1="[${GR}\u@\h${BL} \W${GR}\$(parse_git_branch)\$(git_dirty_flag)${NONE}]$ "
 else
-        PS1="[${RD}\u@\h${BL} \W${NONE}]# "
+    PS1="[${RD}\u@\h${BL} \W${GR}\$(parse_git_branch)\$(git_dirty_flag)${NONE}]# "
 fi
 
 # SET TERMNAME
@@ -98,9 +107,34 @@ alias reload='source ~/.bashrc'
 alias vi='vim'
 alias sudo='sudo '
 alias ssh='ssh -A'
+alias phpunit='/opt/lampp/bin/phpunit'
+alias php='/opt/lampp/bin/php'
 
 which colortail &>/dev/null && alias tail='colortail -q -k /etc/colortail/conf.messages'
 which xrandr &>/dev/null && alias fixres='xrandr --size 1280x1024'
+
+# SETUP HANDLER FOR XCLIP
+which xclip &>/dev/null
+if [[ $? == '0' ]]; then
+    alias xcopy='xclip -sel clip'
+fi
+
+git_dirty_flag() {
+    git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "*"}'
+}
+
+parse_git_branch() {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+perfcheck() {
+    if [[ -z ${1} ]]; then
+        echo "perfcheck <url>"
+        return
+    fi
+
+    curl -o /dev/null -w 'Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: ${time_total} \n' -s ${1}
+}
 
 rsed() {
 	if [[ -z ${1} ]] || [[ -z ${2} ]]; then
@@ -117,6 +151,17 @@ rsed() {
 	for i in $(grep -R "${1}" ${loc} | cut -d ':' -f 1); do
 		sed -i "s|${1}|${2}|g" ${i};
 	done
+}
+
+rwc() {
+    if [[ -z ${1} ]]; then
+        echo "rwc <path>"
+        return
+    fi
+
+    total=`find ${1} -type -f -exec wc -l {} \; | awk '{total += $1} END{print total}'`
+
+    echo "Total lines: $total"
 }
 
 vercmp() {
@@ -142,13 +187,52 @@ lc() {
 	done;
 	echo 0$y | bc;
 }
-	
+
+wpdeploy() {
+    if [[ -z ${1} ]]; then
+        echo "wpdeploy <user> <group>"
+        return
+    fi
+
+    FEYW="\033[1;33m"
+    FEWH="\033[1;37m"
+    FEBL="\033[1;34m"
+    FNONE="\033[0m"
+
+    USER=${1};
+
+    if [[ -z ${2} ]]; then
+        GROUP=${USER};
+    else
+        GROUP=${2};
+    fi
+
+    echo -e "${FEYW}:: ${FEWH}Downloading WordPress...${FNONE}";
+    curl --progress-bar -o latest.tar.gz http://wordpress.org/latest.tar.gz;
+
+    echo -e "${FEYW}:: ${FEWH}Extracting WordPress...${FNONE}";
+    tar -xf latest.tar.gz;
+    mv wordpress/* .;
+
+    echo -e "${FEYW}:: ${FEWH}Setting permissions...${FNONE}";
+    chown -R ${USER}:${GROUP} *;
+
+    echo -e "${FEYW}:: ${FEWH}Cleaning up...${FNONE}";
+    rm -R wordpress latest.tar.gz;
+
+    echo -e "${FEBL}:: ${FEWH}Done!${FNONE}";
+}
+
 ### ALIASES }}}
 
 ### DEBIAN SPECIFIC {{{
 
 if which apt-get &>/dev/null; then
 	alias apt-get='sudo apt-get'
+
+    # SETUP UBUNTU PACKAGING TOOLS
+    export DEBFULLNAME="Daniel J Griffiths"
+    export DEBEMAIL="dgriffiths@section214.com"
 fi
 
 ### DEBIAN SPECIFIC }}}
