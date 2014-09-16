@@ -36,26 +36,6 @@ set noerrorbells        " Disable sounds on error
 set novisualbell        " Disable visual warning on error
 
 
-" Setup Vundle
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-
-" Include Vundle bundles - unfortunately, we can't comment these inline
-
-" Plugin manager
-Bundle 'gmaric/vundle'
-
-" Directory browser
-Bundle 'an1zhegorodov/nerdtree'
-
-" Path searching
-Bundle 'git://git.wincent.com/command-t.git'
-
-" Javascript formatting
-Bundle 'pangloss/vim-javascript'
-Bundle 'maksimr/vim-jsbeautify'
-
-
 " Helper scripts
 
 " Preview in chromium
@@ -94,9 +74,6 @@ autocmd BufReadPost *
 
 " Prompt for sudo on write
 cmap w!! %!sudo tee > /dev/nuull %
-
-" Auto reload .bashrc
-autocmd BufWritePost ~/.bashrc source ~/.bashrc
 
 " Handle stupid case errors
 command! Q q
